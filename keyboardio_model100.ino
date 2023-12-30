@@ -11,14 +11,14 @@
 #include "Kaleidoscope.h"
 
 // Friendly names for keys
-#include "kaleidoscope/key_defs/keyboard.h"
+//#include "kaleidoscope/key_defs/keyboard.h"
 
 // Support for storing the keymap in EEPROM
-#include "Kaleidoscope-EEPROM-Settings.h"
-#include "Kaleidoscope-EEPROM-Keymap.h"
+//#include "Kaleidoscope-EEPROM-Settings.h"
+//#include "Kaleidoscope-EEPROM-Keymap.h"
 
 // Support for communicating with the host via a simple Serial protocol
-#include "Kaleidoscope-FocusSerial.h"
+//#include "Kaleidoscope-FocusSerial.h"
 
 // Support for querying the firmware version via Focus
 #include "Kaleidoscope-FirmwareVersion.h"
@@ -85,23 +85,23 @@
 #include "Kaleidoscope-USB-Quirks.h"
 
 // Support for secondary actions on keys
-#include "Kaleidoscope-Qukeys.h"
+//#include "Kaleidoscope-Qukeys.h"
 
 // Support for one-shot modifiers and layer keys
 #include "Kaleidoscope-OneShot.h"
 #include "Kaleidoscope-Escape-OneShot.h"
 
 // Support for dynamic, Chrysalis-editable macros
-#include "Kaleidoscope-DynamicMacros.h"
+//#include "Kaleidoscope-DynamicMacros.h"
 
 // Support for SpaceCadet keys
-#include "Kaleidoscope-SpaceCadet.h"
+//#include "Kaleidoscope-SpaceCadet.h"
 
 // Support for editable layer names
-#include "Kaleidoscope-LayerNames.h"
+//#include "Kaleidoscope-LayerNames.h"
 
 // Support for the GeminiPR Stenography protocol
-#include "Kaleidoscope-Steno.h"
+//#include "Kaleidoscope-Steno.h"
 
 /** This 'enum' is a list of all the macros used by the Model 100's firmware
   * The names aren't particularly important. What is important is that each
@@ -180,18 +180,18 @@ enum { QWERTY, MOUSE_NUMPAD, FUNCTION, SYSTEM_EMERGENCY }; // layers
 KEYMAPS(
   [QWERTY] = KEYMAP_STACKED
   ( // QWERTY Left
-   Key_Backtick, Key_F1, Key_F2, Key_F3, Key_F4, Key_F5, OSM(LeftAlt),
+   Key_Backtick, Key_1,  Key_2,  Key_3,  Key_4,  Key_5,  Key_LeftGui,
    Key_Tab,      Key_Q,  Key_W,  Key_E,  Key_R,  Key_T,  Key_F3,
    Key_PageUp,   Key_A,  Key_S,  Key_D,  Key_F,  Key_G,
    Key_PageDown, Key_Z,  Key_X,  Key_C,  Key_V,  Key_B,  Key_Minus, // Dvorak left bracket
-   Key_Escape,   Key_LeftShift, Key_LeftControl, Key_LeftGui,
+   Key_Escape,   Key_LeftShift, Key_CapsLock, Key_LeftAlt,  // Intended to be used with xkbmap -option ctrl:swapcaps
    ShiftToLayer(FUNCTION),
 
    // QWERTY Right
-   LockLayer(MOUSE_NUMPAD),  Key_F6, Key_F7, Key_F8,     Key_F9,         Key_F10,        Key_RightBracket, // Dvorak equals
+   LockLayer(MOUSE_NUMPAD),  Key_6,  Key_7,  Key_8,      Key_9,          Key_0,          Key_RightBracket, // Dvorak equals
    Key_F4,                   Key_Y,  Key_U,  Key_I,      Key_O,          Key_P,          Key_LeftBracket,  // Dvorak slash
                              Key_H,  Key_J,  Key_K,      Key_L,          Key_Semicolon,  Key_Quote,        // Dvorak minus
-   Key_Equals,               Key_N,  Key_M,  Key_Comma,  Key_Period,     Key_Slash,      Key_Pause,       // = is Dvorak right bracket
+   Key_Equals,               Key_N,  Key_M,  Key_Comma,  Key_Period,     Key_Slash,      Key_Pause,        // = is Dvorak right bracket
    Key_Backspace, Key_Enter, Key_Spacebar, OSM(RightShift),
    ShiftToLayer(FUNCTION)),
 
@@ -214,19 +214,19 @@ KEYMAPS(
 
   [FUNCTION] =  KEYMAP_STACKED
   ( // Function Left
-   XXX,                   ___,             ___,        ___,   ___,   ___,   M(MACRO_VERSION_INFO),
-   ___,                   Key_6,           Key_7,      Key_8, Key_9, Key_0, Key_F11,
-   Key_LEDEffectNext,     Key_1,           Key_2,      Key_3, Key_4, Key_5,
-   Key_LEDEffectPrevious, Key_PrintScreen, Key_Insert, XXX,   XXX,   XXX,   Key_Home,
-   Key_LeftGui, Key_LeftShift, Key_LeftControl, Key_LeftAlt,
+   XXX, ___,             ___,        ___,    ___,    ___,     LSHIFT(Key_LeftGui),
+   ___, Key_F6,          Key_F7,     Key_F8, Key_F9, Key_F10, Key_F11,
+   ___, Key_F1,          Key_F2,     Key_F3, Key_F4, Key_F5,
+   ___, Key_PrintScreen, Key_Insert, XXX,    XXX,    XXX,     Key_Home,
+   ___, OSM(RightShift), OSM(RightControl), OSM(RightAlt),
    ___,
 
    // Function Right
-   M(MACRO_ANY), ___,        ___,                   ___,                   ___,         ___, XXX,
+   Key_LEDEffectNext, ___,           ___,                      ___,                      ___,            ___,     XXX,
    Key_F12,           XXX,           Key_Home,                 Key_UpArrow,              Key_End,        XXX,     Key_Backslash,
                       XXX,           Key_LeftArrow,            Key_DownArrow,            Key_RightArrow, XXX,     XXX,
    Key_End,           Consumer_Mute, Consumer_VolumeDecrement, Consumer_VolumeIncrement, XXX,            XXX,     XXX,
-   Key_Delete, ___, ___, Key_RightGui,
+   Key_Delete, ___, ___, ___,
    ___),
 
   [SYSTEM_EMERGENCY] = KEYMAP_STACKED
@@ -425,6 +425,7 @@ static void toggleKeyboardProtocol(uint8_t combo_index) {
 /**
  * Toggles between using the built-in keymap, and the EEPROM-stored one.
  */
+/*
 static void toggleKeymapSource(uint8_t combo_index) {
   if (Layer.getKey == Layer.getKeyFromPROGMEM) {
     Layer.getKey = EEPROMKeymap.getKey;
@@ -432,6 +433,7 @@ static void toggleKeymapSource(uint8_t combo_index) {
     Layer.getKey = Layer.getKeyFromPROGMEM;
   }
 }
+*/
 
 /**
  *  This enters the hardware test mode
@@ -450,9 +452,10 @@ USE_MAGIC_COMBOS({.action = toggleKeyboardProtocol,
                  {.action = enterHardwareTestMode,
                   // Left Fn + Prog + LED
                   .keys = {R3C6, R0C0, R0C6}},
-                 {.action = toggleKeymapSource,
+                 //{.action = toggleKeymapSource,
                   // Left Fn + Prog + Shift
-                  .keys = {R3C6, R0C0, R3C7}});
+                  //.keys = {R3C6, R0C0, R3C7}},
+                );
 
 // First, tell Kaleidoscope which plugins you want to use.
 // The order can be important. For example, LED effects are
@@ -463,29 +466,29 @@ KALEIDOSCOPE_INIT_PLUGINS(
 
   // The EEPROMSettings & EEPROMKeymap plugins make it possible to have an
   // editable keymap in EEPROM.
-  EEPROMSettings,
-  EEPROMKeymap,
+  //EEPROMSettings,
+  //EEPROMKeymap,
 
   // Focus allows bi-directional communication with the host, and is the
   // interface through which the keymap in EEPROM can be edited.
-  Focus,
+  //Focus,
 
   // FocusSettingsCommand adds a few Focus commands, intended to aid in
   // changing some settings of the keyboard, such as the default layer (via the
   // `settings.defaultLayer` command)
-  FocusSettingsCommand,
+  //FocusSettingsCommand,
 
   // FocusEEPROMCommand adds a set of Focus commands, which are very helpful in
   // both debugging, and in backing up one's EEPROM contents.
-  FocusEEPROMCommand,
+  //FocusEEPROMCommand,
 
   // The FirmwareVersion plugin lets Chrysalis query the version of the firmware
   // programmatically.
-  FirmwareVersion,
+  //FirmwareVersion,
 
   // The LayerNames plugin allows Chrysalis to display - and edit - custom layer
   // names, to be shown instead of the default indexes.
-  LayerNames,
+  //LayerNames,
 
   // Enables setting, saving (via Chrysalis), and restoring (on boot) the
   // default LED mode.
@@ -500,13 +503,13 @@ KALEIDOSCOPE_INIT_PLUGINS(
   // The Qukeys plugin enables the "Secondary action" functionality in
   // Chrysalis. Keys with secondary actions will have their primary action
   // performed when tapped, but the secondary action when held.
-  Qukeys,
+  //Qukeys,
 
   // SpaceCadet can turn your shifts into parens on tap, while keeping them as
   // Shifts when held. SpaceCadetConfig lets Chrysalis configure some aspects of
   // the plugin.
-  SpaceCadet,
-  SpaceCadetConfig,
+  //SpaceCadet,
+  //SpaceCadetConfig,
 
   // Enables the "Sticky" behavior for modifiers, and the "Layer shift when
   // held" functionality for layer keys.
@@ -519,7 +522,7 @@ KALEIDOSCOPE_INIT_PLUGINS(
   Macros,
 
   // Enables dynamic, Chrysalis-editable macros.
-  DynamicMacros,
+  //DynamicMacros,
 
   // The MouseKeys plugin lets you add keys to your keymap which move the mouse.
   MouseKeys,
@@ -532,7 +535,7 @@ KALEIDOSCOPE_INIT_PLUGINS(
 
   // Enables the GeminiPR Stenography protocol. Unused by default, but with the
   // plugin enabled, it becomes configurable - and then usable - via Chrysalis.
-  GeminiPR,
+  //GeminiPR,
 
   // ----------------------------------------------------------------------
   // LED mode plugins
@@ -650,7 +653,7 @@ void setup() {
   // one wants to use these layers, just set the default layer to one in EEPROM,
   // by using the `settings.defaultLayer` Focus command, or by using the
   // `keymap.onlyCustom` command to use EEPROM layers only.
-  EEPROMKeymap.setup(8);
+  //EEPROMKeymap.setup(8);
 
   // We need to tell the Colormap plugin how many layers we want to have custom
   // maps for. To make things simple, we set it to eight layers, which is how
@@ -659,21 +662,21 @@ void setup() {
 
   // For Dynamic Macros, we need to reserve storage space for the editable
   // macros. A kilobyte is a reasonable default.
-  DynamicMacros.reserve_storage(1024);
+  //DynamicMacros.reserve_storage(1024);
 
   // If there's a default layer set in EEPROM, we should set that as the default
   // here.
-  Layer.move(EEPROMSettings.default_layer());
+  //Layer.move(EEPROMSettings.default_layer());
 
   // To avoid any surprises, SpaceCadet is turned off by default. However, it
   // can be permanently enabled via Chrysalis, so we should only disable it if
   // no configuration exists.
-  SpaceCadetConfig.disableSpaceCadetIfUnconfigured();
+  //SpaceCadetConfig.disableSpaceCadetIfUnconfigured();
 
   // Editable layer names are stored in EEPROM too, and we reserve 16 bytes per
   // layer for them. We need one extra byte per layer for bookkeeping, so we
   // reserve 17 / layer in total.
-  LayerNames.reserve_storage(17 * 8);
+  //LayerNames.reserve_storage(17 * 8);
 
   // Unless configured otherwise with Chrysalis, we want to make sure that the
   // firmware starts with LED effects off. This avoids over-taxing devices that
