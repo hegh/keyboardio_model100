@@ -682,6 +682,9 @@ void setup() {
   // firmware starts with LED effects off. This avoids over-taxing devices that
   // don't have a lot of power to share with USB devices
   DefaultLEDModeConfig.activateLEDModeIfUnconfigured(&LEDOff);
+
+  // Turn off auto one-shotting of all modifiers and layer-shifts.
+  OneShot.disableAutoOneShot();
 }
 
 /** loop is the second of the standard Arduino sketch functions.
