@@ -7,6 +7,8 @@
  * as well as the Kaleidoscope plugins we use in the Model 100's firmware
  */
 
+// TODO: Try the ActiveModColor plugin to indicate which modifiers are active.
+
 // The Kaleidoscope core
 #include "Kaleidoscope.h"
 
