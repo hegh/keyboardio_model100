@@ -186,7 +186,7 @@ KEYMAPS(
    Key_Tab,      Key_Q,  Key_W,  Key_E,  Key_R,  Key_T,  Key_F3,
    Key_PageUp,   Key_A,  Key_S,  Key_D,  Key_F,  Key_G,
    Key_PageDown, Key_Z,  Key_X,  Key_C,  Key_V,  Key_B,  Key_Minus, // Dvorak left bracket
-   Key_Escape,   Key_LeftShift, Key_CapsLock, Key_LeftAlt,  // Intended to be used with xkbmap -option ctrl:swapcaps
+   Key_Escape,   Key_LeftShift, Key_LeftControl, Key_LeftAlt,
    ShiftToLayer(FUNCTION),
 
    // QWERTY Right
@@ -194,7 +194,7 @@ KEYMAPS(
    Key_F4,                   Key_Y,  Key_U,  Key_I,      Key_O,          Key_P,          Key_LeftBracket,  // Dvorak slash
                              Key_H,  Key_J,  Key_K,      Key_L,          Key_Semicolon,  Key_Quote,        // Dvorak minus
    Key_Equals,               Key_N,  Key_M,  Key_Comma,  Key_Period,     Key_Slash,      Key_Pause,        // = is Dvorak right bracket
-   Key_Backspace, Key_Enter, Key_Spacebar, OSM(RightShift),
+   Key_Backspace, Key_Enter, Key_Spacebar, Key_RightShift,
    ShiftToLayer(FUNCTION)),
 
   [MOUSE_NUMPAD] =  KEYMAP_STACKED
@@ -220,7 +220,7 @@ KEYMAPS(
    ___, Key_F6,          Key_F7,     Key_F8, Key_F9, Key_F10, Key_F11,
    ___, Key_F1,          Key_F2,     Key_F3, Key_F4, Key_F5,
    ___, Key_PrintScreen, Key_Insert, XXX,    XXX,    XXX,     Key_Home,
-   ___, OSM(RightShift), OSM(RightControl), OSM(RightAlt),
+   ___, Key_RightShift, Key_RightControl, Key_RightAlt,
    ___,
 
    // Function Right
